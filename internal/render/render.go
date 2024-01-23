@@ -104,11 +104,11 @@ func RenderTemplate(w http.ResponseWriter, t string, data *models.TemplateData) 
 	err := template.Template.Execute(buf, data)
 
 	if err != nil {
-		app.Logger.Fatal("Error executing template %s! Goodbye!", "err", err)
+		app.Logger.Fatal(fmt.Sprintf("Error executing template %s! Goodbye!", filename), "err", err)
 	}
 
 	_, err = buf.WriteTo(w)
 	if err != nil {
-		app.Logger.Error("Error writing template %s!\n", "err", err)
+		app.Logger.Error(fmt.Sprintf("Error writing template %s!", filename), "err", err)
 	}
 }

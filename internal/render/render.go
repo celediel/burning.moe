@@ -93,7 +93,13 @@ func RenderTemplate(w http.ResponseWriter, filename string, data *models.Templat
 	// Get templates from cache
 	template, ok := app.TemplateCache.Cache[filename]
 	if !ok {
-		app.Logger.Fatal(fmt.Sprintf("Couldn't get %s from template cache, bailing out!", filename))
+		app.Logger.Errorf("Couldn't get %s from template cache, dunno what happened, but we're gonna generate a new one", filename)
+		c, err := GenerateNewTemplateCache()
+		if err != nil {
+			app.Logger.Fatal("Error generating template cache, bailing out!")
+		}
+		app.TemplateCache = c
+		template = app.TemplateCache.Cache[filename]
 	}
 
 	// Execute templates in a new buffer

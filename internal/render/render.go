@@ -24,7 +24,9 @@ var app *config.AppConfig
 func Initialise(a *config.AppConfig) {
 	var err error
 	app = a
-	app.TemplateCache, err = GenerateNewTemplateCache()
+	if app.UseCache {
+		app.TemplateCache, err = GenerateNewTemplateCache()
+	}
 	if err != nil {
 		app.Logger.Fatal("Error generating template cache, bailing out!")
 	}

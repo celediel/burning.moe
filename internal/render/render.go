@@ -79,8 +79,7 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 }
 
 // RenderTemplate renders requested template (t), pulling from cache.
-func RenderTemplate(w http.ResponseWriter, t string, data *models.TemplateData) {
-	filename := t + ".tmpl"
+func RenderTemplate(w http.ResponseWriter, filename string, data *models.TemplateData) {
 	var cache models.TemplateCache
 	if app.UseCache {
 		cache = app.TemplateCache

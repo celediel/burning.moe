@@ -48,6 +48,7 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 	for _, page := range pages {
 		name := filepath.Base(page)
 		app.Logger.Info("Generating template " + name)
+		generatedAt := time.Now()
 
 		templateSet, err := template.New(name).ParseFiles(page)
 		if err != nil {
@@ -68,8 +69,9 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 		}
 		cache.Cache[name] = models.TemplateCacheItem{
 			Template:    templateSet,
-			GeneratedAt: time.Now(),
+			GeneratedAt: generatedAt,
 		}
+		app.Logger.Debugf("Generated %s at %v", name, generatedAt.String())
 	}
 
 	// All was good, so return the cache, and no error

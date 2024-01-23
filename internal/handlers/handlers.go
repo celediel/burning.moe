@@ -40,9 +40,9 @@ func Initialise(a *config.AppConfig) {
 // time the related template was generated
 func makeBasicTemplateData(name string) models.TemplateData {
 	var strMap map[string]string
-	if _, ok := app.TemplateCache.Cache[name]; ok {
+	if cacheItem, ok := app.TemplateCache.Cache[name]; ok {
 		strMap = map[string]string{
-			"GeneratedAt": app.TemplateCache.Cache[name].GeneratedAt.Format(time.UnixDate),
+			"GeneratedAt": cacheItem.GeneratedAt.Format(time.UnixDate),
 		}
 	} else {
 		strMap = make(map[string]string)

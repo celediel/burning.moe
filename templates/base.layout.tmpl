@@ -1,0 +1,37 @@
+{{- define "base" -}}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>burning.moe</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    {{- block "css" . }}
+    {{- end }}
+</head>
+<body>
+  <div id="stuff">
+  {{- block "content" . }}
+  {{ end -}}
+  </div>
+
+{{- block "js" . }}
+{{ end -}}
+  <div id="leftfooter">
+    note: please do not set fire to cute girls
+  </div>
+  <div id="rightfooter">
+    powered by
+    <a href="https://www.debian.org/">debian</a>
+    and
+    <a href="https://go.dev/">go</a>,
+    proxied by
+    <a href="https://caddyserver.com/">caddy</a>
+    -
+    <a href="https://git.burning.moe/celediel/burning.moe">source</a>
+  </div>
+</body>
+</html>
+{{ end -}}

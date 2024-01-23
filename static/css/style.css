@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
+body {
+  background: #FFF;
+  color: #121212;
+  text-align: center;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  /* ...and now for the proper property */
+  transition: .5s;
+}
+
+a:hover {
+  color: #999;
+}
+
+a.back {
+  color: #111;
+}
+
+#stuff {
+  margin: 55px 150px 25px 150px;
+}
+
+#words {
+  font-size: 1.0em;
+  margin-top: -10px;
+}
+
+#bigwords {
+  font-size: 1.3em;
+}
+
+#leftfooter {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 0.75em;
+  text-align: left;
+}
+
+#rightfooter {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.75em;
+  text-align: right;
+}
+
+#header {
+  margin: 0px;
+  margin-top: -20px;
+}
+
+h1 {
+  font-size: 1.7em;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+h2 {
+  padding-top: 0px;
+  font-size: 1.4em;
+}

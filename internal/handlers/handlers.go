@@ -45,7 +45,9 @@ func makeBasicTemplateData(name string) models.TemplateData {
 			"GeneratedAt": cacheItem.GeneratedAt.Format(time.UnixDate),
 		}
 	} else {
-		strMap = make(map[string]string)
+		strMap = map[string]string{
+			"GeneratedAt": time.Now().Format(time.UnixDate),
+		}
 	}
 
 	templateData := models.TemplateData{

@@ -82,20 +82,16 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 
 // RenderTemplate renders requested template (t), pulling from cache.
 func RenderTemplate(w http.ResponseWriter, filename string, data *models.TemplateData) {
-	var cache models.TemplateCache
-	if app.UseCache {
-		cache = app.TemplateCache
-	} else {
-		var err error
-		cache, err = GenerateNewTemplateCache()
+	if !app.UseCache {
+		c, err := GenerateNewTemplateCache()
 		if err != nil {
 			app.Logger.Fatal("Error generating template cache, bailing out!")
 		}
-		app.TemplateCache = cache
+		app.TemplateCache = c
 	}
 
 	// Get templates from cache
-	template, ok := cache.Cache[filename]
+	template, ok := app.TemplateCache.Cache[filename]
 	if !ok {
 		app.Logger.Fatal(fmt.Sprintf("Couldn't get %s from template cache, bailing out!", filename))
 	}

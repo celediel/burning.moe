@@ -90,6 +90,7 @@ func RenderTemplate(w http.ResponseWriter, t string, data *models.TemplateData) 
 		if err != nil {
 			app.Logger.Fatal("Error generating template cache, bailing out!")
 		}
+		app.TemplateCache = cache
 	}
 
 	// Get templates from cache

@@ -73,7 +73,7 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 			Template:    templateSet,
 			GeneratedAt: generatedAt,
 		}
-		app.Logger.Debugf("Generated %s at %v", name, generatedAt.String())
+		app.Logger.Debugf("Generated %s at %v", name, generatedAt.Format(time.UnixDate))
 	}
 
 	// All was good, so return the cache, and no error

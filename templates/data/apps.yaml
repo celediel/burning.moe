@@ -1,5 +1,8 @@
 LinkMap:
   hosted apps:
+    - href: https://kuma.burning.moe/status/amazing-beaver
+      text: burning.moe status page
+      icon: simple-icons:uptimekuma
     - href: https://git.burning.moe/
       text: gitea
       icon: mdi:git

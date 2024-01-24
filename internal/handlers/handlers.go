@@ -52,6 +52,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	t, err := render.GetTemplateFromCache(page)
 	if err != nil {
 		app.Logger.Error(fmt.Sprintf("couldn't get %s from cache", page), "err", err)
+		d.StringMap = map[string]string{
+			"GeneratedAt": time.Now().Format(time.UnixDate),
+		}
 	} else {
 		d.StringMap = map[string]string{
 			"GeneratedAt": t.GeneratedAt.Format(time.UnixDate),

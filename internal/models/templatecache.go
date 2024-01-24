@@ -1,7 +1,9 @@
 package models
 
 import (
+	"bytes"
 	"html/template"
+	"net/http"
 	"time"
 )
 
@@ -15,4 +17,20 @@ type TemplateCache struct {
 type TemplateCacheItem struct {
 	Template    *template.Template
 	GeneratedAt time.Time
+}
+
+// Execute writes the template to the supplied writer using the supplied data.
+func (self *TemplateCacheItem) Execute(d *TemplateData, w http.ResponseWriter) error {
+	buf := new(bytes.Buffer)
+	err := self.Template.Execute(buf, d)
+	if err != nil {
+		return err
+	}
+
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

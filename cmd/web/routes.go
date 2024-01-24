@@ -27,5 +27,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get(handler.Handles, handler.Handler)
 	}
 
+	// Setup home handler
+	mux.Get("/", handlers.HomeHandler)
+
 	return mux
 }

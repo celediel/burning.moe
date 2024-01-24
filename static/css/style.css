@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+/*
+  TODO: update this to be a bit more modern
+  maybe use SASS or something
+
+  the real TODO here is finding an image that doesn't require a white background
+
+  also TODO: proper mobile layout
+*/
 
 body {
   background: #FFF;

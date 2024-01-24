@@ -1,0 +1,25 @@
+LinkMap:
+  morrowind lua mods:
+    - href: https://git.burning.moe/celediel/morrowind-a-sinking-feeling
+      text: a sinking feeling - armour causes sinking in water
+      icon: simple-icons:lua
+    - href: https://git.burning.moe/celediel/morrowind-no-more-friendly-fire
+      text: no more friendly fire - does what it says on the tin
+      icon: simple-icons:lua
+    - href: https://git.burning.moe/celediel/morrowind-door-randomizer
+      text: door randomizer - randomizes destinations of cell change doors
+      icon: simple-icons:lua
+    - href: https://git.burning.moe/celediel/morrowind-more-attentive-guards
+      text: more attentive guards - guards follow sneaking characters and help out when attacked unjustly
+      icon: simple-icons:lua
+  other modding:
+    - href: https://git.burning.moe/celediel/qud-mods
+      text: Assorted mods for Caves of Qud (C#)
+      icon: teenyicons:c-sharp-solid
+  misc:
+    - href: https://git.burning.moe/celediel/poiekolon.nvim
+      text: poiekolon - neovim plugin to add or toggle a char at the end of a line
+      icon: simple-icons:lua
+    - href: https://git.burning.moe/celediel/burning.moe
+      text: burning.moe - this website
+      icon: file-icons:go-old

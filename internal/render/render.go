@@ -1,7 +1,7 @@
 package render
 
 import (
-	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -16,20 +16,20 @@ import (
 const (
 	templatesDir string = "./templates/"
 	layoutGlob   string = "*.layout.tmpl"
-	pageGlob     string = "*.page.tmpl"
+	pageGlob     string = "*.tmpl"
 )
 
 var app *config.AppConfig
 
 // Initialise the render package.
 func Initialise(a *config.AppConfig) {
-	var err error
 	app = a
 	if app.UseCache {
+		var err error
 		app.TemplateCache, err = GenerateNewTemplateCache()
-	}
-	if err != nil {
-		app.Logger.Fatal("Error generating template cache, bailing out!")
+		if err != nil {
+			app.Logger.Fatal("Error generating template cache, bailing out!")
+		}
 	}
 }
 
@@ -83,30 +83,73 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 
 // RenderTemplate renders requested template (t), pulling from cache.
 func RenderTemplate(w http.ResponseWriter, filename string) {
+	// TODO: implement this better
 	if !app.UseCache {
-		c, err := GenerateNewTemplateCache()
-		if err != nil {
-			app.Logger.Fatal("Error generating template cache, bailing out!")
-		}
-		app.TemplateCache = c
+		RegenerateTemplateCache()
 	}
 
-	// Get templates from cache
-	template, ok := app.TemplateCache.Cache[filename]
-	if !ok {
-		app.Logger.Errorf("Couldn't get %s from template cache, dunno what happened, but we're gonna generate a new one", filename)
-		c, err := GenerateNewTemplateCache()
-		if err != nil {
-			app.Logger.Fatal("Error generating template cache, bailing out!")
-		}
-		app.TemplateCache = c
-		template = app.TemplateCache.Cache[filename]
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
 	}
 
-	// Get template data from file, or generate simple
+	data, err := GetOrGenerateTemplateData(filename)
+	if err != nil {
+		app.Logger.Error(err)
+	}
+
+	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
+	err = template.Execute(data, w)
+	if err != nil {
+		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
+	}
+}
+
+func RenderTemplateWithData(w http.ResponseWriter, filename string, data *models.TemplateData) {
+	if !app.UseCache {
+		RegenerateTemplateCache()
+	}
+
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
+	}
+
+	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
+	err = template.Execute(data, w)
+	if err != nil {
+		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
+	}
+}
+
+func RegenerateTemplateCache() {
+	c, err := GenerateNewTemplateCache()
+	if err != nil {
+		app.Logger.Fatal("Error generating template cache, bailing out!")
+	}
+	app.TemplateCache = c
+
+}
+
+// GetTemplateFromCache gets templates from cache
+func GetTemplateFromCache(filename string) (*models.TemplateCacheItem, error) {
+	if template, ok := app.TemplateCache.Cache[filename]; ok {
+		return &template, nil
+	} else {
+		return &models.TemplateCacheItem{}, errors.New("Couldn't load template from cache")
+	}
+}
+
+// GetOrGenerateTemplateData gets template data from file, or generate simple
+func GetOrGenerateTemplateData(filename string) (*models.TemplateData, error) {
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		return &models.TemplateData{}, err
+	}
+
 	data, err := td.LoadTemplateData(filename)
 	if err == nil {
-		app.Logger.Debug(fmt.Sprintf("Loaded data for template %s.", filename), "data", data)
+		app.Logger.Debug(fmt.Sprintf("Loaded data for template %s.", filename), "data", &data)
 		if _, ok := data.StringMap["GeneratedAt"]; !ok {
 			data.StringMap["GeneratedAt"] = template.GeneratedAt.Format(time.UnixDate)
 		}
@@ -115,15 +158,5 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 		data = td.MakeBasicTemplateData(template.GeneratedAt)
 	}
 
-	// Execute templates in a new buffer
-	buf := new(bytes.Buffer)
-	err = template.Template.Execute(buf, data)
-	if err != nil {
-		app.Logger.Fatal(fmt.Sprintf("Error executing template %s! Goodbye!", filename), "err", err)
-	}
-
-	_, err = buf.WriteTo(w)
-	if err != nil {
-		app.Logger.Error(fmt.Sprintf("Error writing template %s!", filename), "err", err)
-	}
+	return &data, nil
 }

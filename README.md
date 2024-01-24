@@ -8,8 +8,6 @@ Code for the [burning.moe](https://burning.moe) homepage
   - [cleanenv](https://github.com/ilyakaznacheev/cleanenv)
   - [log](https://github.com/charmbracelet/log)
   - [mage](https://github.com/magefile/mage)
-  - [toml](https://github.com/BurntSushi/toml)
-  - [yaml](https://github.com/go-yaml/yaml)
 
 ## why?
 

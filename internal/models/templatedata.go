@@ -1,15 +1,13 @@
 package models
 
 import (
-	"encoding/json"
 	"errors"
 	"html/template"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/BurntSushi/toml"
-	"gopkg.in/yaml.v3"
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 const dataDir string = "./templates/data/"
@@ -56,7 +54,7 @@ func LoadTemplateData(page string) (TemplateData, error) {
 
 	for _, extension := range dataExtensions {
 		if info, err := os.Stat(output + extension); err == nil && !info.IsDir() {
-			data, err = loadFromFile(output, extension)
+			err = cleanenv.ReadConfig(output+extension, &data)
 			if err == nil {
 				// don't try anymore files
 				return data, nil
@@ -66,32 +64,4 @@ func LoadTemplateData(page string) (TemplateData, error) {
 
 	// couldn't load anything from file
 	return TemplateData{}, errors.New("Couldn't load data from file")
-}
-
-// loadFromFile loads TemplateData from the specified filetype (yaml, toml, or json)
-func loadFromFile(filename, filetype string) (TemplateData, error) {
-	var data TemplateData
-	file, err := os.ReadFile(filename + filetype)
-	if err != nil {
-		return TemplateData{}, err
-	}
-
-	switch filetype {
-	case "json":
-		err = json.Unmarshal(file, &data)
-		if err != nil {
-			return TemplateData{}, err
-		}
-	case "toml":
-		err = toml.Unmarshal(file, &data)
-		if err != nil {
-			return TemplateData{}, err
-		}
-	case "yaml":
-		err = yaml.Unmarshal(file, &data)
-		if err != nil {
-			return TemplateData{}, err
-		}
-	}
-	return data, nil
 }

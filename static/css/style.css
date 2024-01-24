@@ -38,6 +38,12 @@ a.back {
   margin: 55px 150px 25px 150px;
 }
 
+#words,
+#bigwords {
+  display: inline-block;
+  width: 60%;
+}
+
 #words {
   font-size: 1.0em;
   margin-top: -10px;

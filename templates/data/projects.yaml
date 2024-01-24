@@ -14,7 +14,7 @@ LinkMap:
       icon: simple-icons:lua
   other modding:
     - href: https://git.burning.moe/celediel/qud-mods
-      text: Assorted mods for Caves of Qud (C#)
+      text: assorted mods for Caves of Qud (C#)
       icon: teenyicons:c-sharp-solid
   misc:
     - href: https://git.burning.moe/celediel/poiekolon.nvim

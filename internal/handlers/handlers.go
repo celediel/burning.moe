@@ -45,7 +45,19 @@ func Initialise(a *config.AppConfig) {
 // HomeHandler handles /, generating data from Handlers
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	app.Logger.Info("Got request for homepage")
-	d := td.MakeBasicTemplateData(time.Now())
+
+	page := "home.page.tmpl"
+	d := models.TemplateData{}
+
+	t, err := render.GetTemplateFromCache(page)
+	if err != nil {
+		app.Logger.Error(fmt.Sprintf("couldn't get %s from cache", page), "err", err)
+	} else {
+		d.StringMap = map[string]string{
+			"GeneratedAt": t.GeneratedAt.Format(time.UnixDate),
+		}
+	}
+
 	var pages []models.Link = []models.Link{}
 
 	for _, handler := range Handlers {

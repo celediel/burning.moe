@@ -1,7 +1,7 @@
 LinkMap:
   hosted apps:
     - href: https://git.burning.moe/
-      text: self-hosted git
+      text: gitea
       icon: mdi:git
     - href: https://bin.burning.moe/
       text: wastebin

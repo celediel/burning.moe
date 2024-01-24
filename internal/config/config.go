@@ -3,6 +3,7 @@ package config
 import (
 	"math"
 	"os"
+	"time"
 
 	"git.burning.moe/celediel/burning.moe/internal/models"
 	"github.com/charmbracelet/log"
@@ -35,7 +36,10 @@ type ConfigDatabase struct {
 // Initialises the app wide AppConfig, loads values from environment, and set up the Logger
 func Initialise() AppConfig {
 	app := *defaults
-	app.Logger = log.New(os.Stderr)
+	app.Logger = log.NewWithOptions(os.Stderr, log.Options{
+		ReportTimestamp: true,
+		TimeFormat:      time.TimeOnly,
+	})
 
 	// load values from config
 	if cfg, err := loadConfig(); err == nil {

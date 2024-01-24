@@ -3,10 +3,11 @@ package main
 import (
 	"net/http"
 
-	"git.burning.moe/celediel/burning.moe/internal/config"
-	"git.burning.moe/celediel/burning.moe/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+
+	"git.burning.moe/celediel/burning.moe/internal/config"
+	"git.burning.moe/celediel/burning.moe/internal/handlers"
 )
 
 // routes handles all of the HTTP setup. Middleware is enabled,

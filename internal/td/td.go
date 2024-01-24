@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"git.burning.moe/celediel/burning.moe/internal/models"
-
 	"github.com/ilyakaznacheev/cleanenv"
+
+	"git.burning.moe/celediel/burning.moe/internal/models"
 )
 
 const dataDir string = "./templates/data/"

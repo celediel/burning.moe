@@ -5,9 +5,10 @@ import (
 	"os"
 	"time"
 
-	"git.burning.moe/celediel/burning.moe/internal/models"
 	"github.com/charmbracelet/log"
 	"github.com/ilyakaznacheev/cleanenv"
+
+	"git.burning.moe/celediel/burning.moe/internal/models"
 )
 
 // AppConfig contains data to be accessed across the app.

@@ -2,10 +2,8 @@ package handlers
 
 import (
 	"net/http"
-	"time"
 
 	"git.burning.moe/celediel/burning.moe/internal/config"
-	"git.burning.moe/celediel/burning.moe/internal/models"
 	"git.burning.moe/celediel/burning.moe/internal/render"
 )
 
@@ -36,33 +34,11 @@ func Initialise(a *config.AppConfig) {
 	app = a
 }
 
-// makeBasicTemplateData creates a blank TemplateData containing only the
-// time the related template was generated
-func makeBasicTemplateData(name string) models.TemplateData {
-	var strMap map[string]string
-	if cacheItem, ok := app.TemplateCache.Cache[name]; ok {
-		strMap = map[string]string{
-			"GeneratedAt": cacheItem.GeneratedAt.Format(time.UnixDate),
-		}
-	} else {
-		strMap = map[string]string{
-			"GeneratedAt": time.Now().Format(time.UnixDate),
-		}
-	}
-
-	templateData := models.TemplateData{
-		StringMap: strMap,
-	}
-	return templateData
-}
-
-// makeBasicHandler creates a basic handler that builds from a .page.tmpl
-// file, and sends only the time the template was generated as TemplateData
+// makeBasicHandler returns a simple handler that renders a template from `name`.page.tmpl
 func makeBasicHandler(name string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		app.Logger.Infof("Got request for %s page", name)
 		pageName := name + ".page.tmpl"
-		templateData := makeBasicTemplateData(pageName)
-		render.RenderTemplate(w, pageName, &templateData)
+		render.RenderTemplate(w, pageName)
 	}
 }

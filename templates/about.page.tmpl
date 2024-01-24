@@ -4,46 +4,27 @@
   <span id="words">
     <h4>celediel</h4>
     <span id="bigwords">
-      she/her, 1989, queer anarchist, self-taught aspiring developer
+      {{ index .StringMap "about" }}
     </span>
-    <h4>links</h4>
 
     <!-- personal links -->
-    <a href="https://matrix.to/#/@celediel:burning.moe">
-      <span class="iconify" data-icon="tabler:brand-matrix"></span>
-      matrix
+    <h4>links</h4>
+    {{ range (index .LinkMap "Personal") }}
+    <a href="{{ .Href }}">
+      <span class="iconify" data-icon="{{ .Icon }}"></span>
+      {{ .Text }}
     </a><br />
-
-    <a href="https://slrpnk.net/u/Celediel">
-      <span class="iconify" data-icon="simple-icons:lemmy"></span>
-      lemmy
-    </a><br />
-
-    <a href="https://git.burning.moe/celediel">
-      <span class="iconify" data-icon="mdi:git"></span>
-      self-hosted git
-    </a><br />
-
-    <a href="https://github.com/celediel">
-      <span class="iconify" data-icon="bi:github"></span>
-      github
-    </a><br />
+    {{ end }}
 
     <!-- web app links -->
     <h4>hosted apps</h4>
-    <a href="https://git.burning.moe/">
-      <span class="iconify" data-icon="mdi:git"></span>
-      self-hosted git
+    {{ range (index .LinkMap "HostedApps") }}
+    <a href="{{ .Href }}">
+      <span class="iconify" data-icon="{{ .Icon }}"></span>
+      {{ .Text }}
     </a><br />
-    <a href="https://bin.burning.moe/">
-      <span class="iconify" data-icon="fluent:bin-recycle-20-filled"></span>
-      wastebin
-    </a><br />
-    <a href="https://gist.burning.moe/">
-      <span class="iconify" data-icon="carbon:paste"></span>
-      gist
-    </a>
-    <br /><br />
+    {{ end }}
+    <br />
     <a href="/">back</a>
   </span>
 {{ end -}}

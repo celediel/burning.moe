@@ -11,9 +11,6 @@
   </a>
   <br />
   <span id="words">
-    <!--
-    <a href="about">about</a>
-    -->
     {{ range (index .LinkMap "Pages")}}
     <a href="{{ .Href }}">{{ .Text }}</a><br />
     {{ end }}

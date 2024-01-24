@@ -1,5 +1,8 @@
 {{- template "base" . -}}
 {{- define "content" }}
+  <span id="bigwords">
+    {{ index .StringMap "words" }}
+  </span>
   <span id="words">
     {{- range $key, $value := .LinkMap }}
     <h4>{{ $key }}</h4>

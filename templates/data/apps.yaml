@@ -1,14 +1,18 @@
+StringMap:
+  words: some things other people wrote that I've hosted
 LinkMap:
-  hosted apps:
+  status:
     - href: https://kuma.burning.moe/status/amazing-beaver
       text: burning.moe status page
       icon: simple-icons:uptimekuma
+  git:
     - href: https://git.burning.moe/
       text: gitea
       icon: mdi:git
-    - href: https://bin.burning.moe/
-      text: wastebin
-      icon: fluent:bin-recycle-20-filled
     - href: https://gist.burning.moe/
       text: gist
       icon: carbon:paste
+  misc:
+    - href: https://bin.burning.moe/
+      text: wastebin
+      icon: fluent:bin-recycle-20-filled

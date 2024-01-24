@@ -1,3 +1,5 @@
+StringMap:
+  words: some things that I've written
 LinkMap:
   morrowind lua mods:
     - href: https://git.burning.moe/celediel/morrowind-a-sinking-feeling
@@ -17,9 +19,9 @@ LinkMap:
       text: assorted mods for Caves of Qud
       icon: teenyicons:c-sharp-solid
   misc:
-    - href: https://git.burning.moe/celediel/poiekolon.nvim
-      text: poiekolon - neovim plugin to add or toggle a char at the end of a line
-      icon: simple-icons:lua
     - href: https://git.burning.moe/celediel/burning.moe
       text: burning.moe - this website
       icon: file-icons:go-old
+    - href: https://git.burning.moe/celediel/poiekolon.nvim
+      text: poiekolon.nvim - neovim plugin to add or toggle a char at the end of a line
+      icon: simple-icons:lua

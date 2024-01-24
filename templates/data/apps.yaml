@@ -10,7 +10,7 @@ LinkMap:
       text: gitea
       icon: mdi:git
     - href: https://gist.burning.moe/
-      text: gist
+      text: opengist
       icon: carbon:paste
   misc:
     - href: https://bin.burning.moe/

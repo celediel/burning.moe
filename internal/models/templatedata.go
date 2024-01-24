@@ -1,20 +1,8 @@
 package models
 
-import (
-	"errors"
-	"html/template"
-	"os"
-	"strings"
-	"time"
+import "html/template"
 
-	"github.com/ilyakaznacheev/cleanenv"
-)
-
-const dataDir string = "./templates/data/"
-
-// in order of precedence
-var dataExtensions = [4]string{"yml", "yaml", "toml", "json"}
-
+// Link holds an http link, text to display, and an iconify icon class
 type Link struct {
 	Href, Icon template.URL
 	Text       string
@@ -31,37 +19,4 @@ type TemplateData struct {
 	Flash     string                 `json:"Flash" yaml:"Flash" toml:"Flash"`
 	Warning   string                 `json:"Warning" yaml:"Warning" toml:"Warning"`
 	Error     string                 `json:"Error" yaml:"Error" toml:"Error"`
-}
-
-// makeBasicTemplateData creates a blank TemplateData containing only the
-// time the related template was generated
-func MakeBasicTemplateData(when time.Time) TemplateData {
-	strMap := map[string]string{
-		"GeneratedAt": when.Format(time.UnixDate),
-	}
-
-	templateData := TemplateData{
-		StringMap: strMap,
-	}
-	return templateData
-}
-
-// LoadTemplateData loads template data from file. If that
-// fails, it returns an empty TemplateData and an error
-func LoadTemplateData(page string) (TemplateData, error) {
-	var data TemplateData
-	output := dataDir + strings.ReplaceAll(page, "tmpl", "")
-
-	for _, extension := range dataExtensions {
-		if info, err := os.Stat(output + extension); err == nil && !info.IsDir() {
-			err = cleanenv.ReadConfig(output+extension, &data)
-			if err == nil {
-				// don't try anymore files
-				return data, nil
-			}
-		}
-	}
-
-	// couldn't load anything from file
-	return TemplateData{}, errors.New("Couldn't load data from file")
 }

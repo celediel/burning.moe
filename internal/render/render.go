@@ -10,6 +10,7 @@ import (
 
 	"git.burning.moe/celediel/burning.moe/internal/config"
 	"git.burning.moe/celediel/burning.moe/internal/models"
+	"git.burning.moe/celediel/burning.moe/internal/td"
 )
 
 const (
@@ -103,7 +104,7 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 	}
 
 	// Get template data from file, or generate simple
-	data, err := models.LoadTemplateData(filename)
+	data, err := td.LoadTemplateData(filename)
 	if err == nil {
 		app.Logger.Debug(fmt.Sprintf("Loaded data for template %s.", filename), "data", data)
 		if _, ok := data.StringMap["GeneratedAt"]; !ok {
@@ -111,7 +112,7 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 		}
 	} else {
 		app.Logger.Info(fmt.Sprintf("Loading template data for %s failed, using default template data.", filename), "err", err)
-		data = models.MakeBasicTemplateData(template.GeneratedAt)
+		data = td.MakeBasicTemplateData(template.GeneratedAt)
 	}
 
 	// Execute templates in a new buffer

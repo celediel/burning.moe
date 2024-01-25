@@ -28,7 +28,7 @@ a:hover {
   color: #999;
 }
 
-a.back {
+a#back {
   color: #111;
 }
 

@@ -46,7 +46,10 @@ func Initialise() AppConfig {
 	if cfg, err := loadConfig(); err == nil {
 		app.ListenPort = cfg.Port
 		app.UseCache = cfg.UseCache
-		app.LogLevel = logLevelFromString(cfg.LogLevel)
+		app.LogLevel, err = log.ParseLevel(cfg.LogLevel)
+		if err != nil {
+			app.LogLevel = defaults.LogLevel
+		}
 	} else {
 		app.Logger.Print("Failed loading config from environment", "err", err)
 	}
@@ -64,25 +67,5 @@ func loadConfig() (ConfigDatabase, error) {
 		return ConfigDatabase{}, err
 	} else {
 		return cfg, nil
-	}
-}
-
-// logLevelFromString turns a string like "warn" into a log.Level like log.WarnLevel
-func logLevelFromString(level string) log.Level {
-	switch level {
-	case "debug":
-		return log.DebugLevel
-	case "info":
-		return log.InfoLevel
-	case "warn":
-		return log.WarnLevel
-	case "error":
-		return log.ErrorLevel
-	case "fatal":
-		return log.FatalLevel
-	case "none":
-		return math.MaxInt32
-	default:
-		return defaults.LogLevel
 	}
 }

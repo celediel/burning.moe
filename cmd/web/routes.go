@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 
 	"git.burning.moe/celediel/burning.moe/internal/config"
 	"git.burning.moe/celediel/burning.moe/internal/handlers"
@@ -16,7 +15,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux := chi.NewRouter()
 
 	// Import some middleware
-	mux.Use(middleware.Recoverer)
+	for _, mw := range Middleware {
+		mux.Use(mw)
+	}
 
 	// Setup static file server
 	app.Logger.Debug("Setting up /static file server")

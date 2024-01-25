@@ -105,24 +105,16 @@ h2 {
 
   #leftfooter,
   #rightfooter {
-    position: fixed;
-    right: 10px;
-    text-align: right;
+    position: relative;
+    text-align: center;
+    right: 0px;
     left: 0px;
     display: block;
     font-size: 2vw;
   }
 
-  #leftfooter {
-    bottom: 10px;
-  }
-
-  #rightfooter {
-    bottom: 35px;
-  }
-
   #stuff {
-    margin: 15px 25px 25px 25px;
+    margin: 15px 25px 75px 25px;
   }
 
   a.links {

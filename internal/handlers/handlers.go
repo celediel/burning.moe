@@ -44,8 +44,6 @@ func Initialise(a *config.AppConfig) {
 
 // HomeHandler handles /, generating data from Handlers
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	app.Logger.Info("Got request for homepage")
-
 	page := "home.page.tmpl"
 	d := models.TemplateData{}
 
@@ -80,7 +78,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 // makeBasicHandler returns a simple handler that renders a template from `name`.page.tmpl
 func makeBasicHandler(name string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		app.Logger.Infof("Got request for %s page", name)
 		pageName := name + ".page.tmpl"
 		render.RenderTemplate(w, pageName)
 	}
@@ -95,7 +92,6 @@ func makeLinksHandler(name string) func(w http.ResponseWriter, r *http.Request) 
 			app.Logger.Error(fmt.Sprintf("couldn't get %s from cache", page), "err", err)
 		}
 
-		app.Logger.Infof("Got request for %s links page", name)
 		data, err := td.LoadTemplateData(name)
 		if err != nil {
 			app.Logger.Fatal("couldn't load template data for "+name, "err", err)

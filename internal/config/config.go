@@ -36,6 +36,8 @@ type ConfigDatabase struct {
 // Initialises the app wide AppConfig, loads values from environment, and set up the Logger
 func Initialise() AppConfig {
 	app := *defaults
+
+	// Setup logger
 	app.Logger = log.NewWithOptions(os.Stderr, log.Options{
 		ReportTimestamp: true,
 		TimeFormat:      time.TimeOnly,

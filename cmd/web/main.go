@@ -11,9 +11,12 @@ import (
 	"git.burning.moe/celediel/burning.moe/internal/render"
 )
 
+// App wide config data and such
+var app config.AppConfig
+
 func main() {
 	// Initialise app and config
-	app := config.Initialise()
+	app = config.Initialise()
 
 	// Initialise handlers and renderer
 	handlers.Initialise(&app)

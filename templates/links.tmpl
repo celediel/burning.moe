@@ -7,7 +7,7 @@
     {{- range $key, $value := .LinkMap }}
     <h4>{{ $key }}</h4>
       {{- range $value }}
-      <a href="{{ .Href }}">
+      <a href="{{ .Href }}" class="links">
         {{- if (ne .Icon "") }}
         <span class="iconify" data-icon="{{ .Icon }}"></span>
         {{ end }}
@@ -16,7 +16,7 @@
     {{- end }}
     {{ end -}}
     <br />
-    <a href="/">
+    <a href="/" id="back">
       <span class="iconify" data-icon="material-symbols:keyboard-arrow-left"></span>
       back
     </a>

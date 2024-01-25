@@ -12,7 +12,7 @@
   <br />
   <span id="words">
     {{ range (index .LinkMap "Pages")}}
-    <a href="{{ .Href }}">{{ .Text }}</a><br />
+    <a href="{{ .Href }}" class="homelinks">{{ .Text }}</a><br />
     {{ end }}
   </span>
 {{ end -}}

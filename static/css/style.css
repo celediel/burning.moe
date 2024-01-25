@@ -32,6 +32,14 @@ a#back {
   color: #111;
 }
 
+a.links {
+  font-size: 1.1em;
+}
+
+a.homelinks {
+  font-size: 1.3em;
+}
+
 #stuff {
   margin: 55px 150px 25px 150px;
 }
@@ -95,20 +103,34 @@ h2 {
     width: 100%;
   }
 
-  #leftfooter {
+  #leftfooter,
+  #rightfooter {
     position: fixed;
-    bottom: 10px;
     right: 10px;
     text-align: right;
+    left: 0px;
+    display: block;
+    font-size: 2vw;
+  }
+
+  #leftfooter {
+    bottom: 10px;
   }
 
   #rightfooter {
-    position: fixed;
     bottom: 35px;
-    right: 10px;
   }
 
   #stuff {
-    margin: 15px 50px 25px 50px;
+    margin: 15px 25px 25px 25px;
   }
+
+  a.links {
+    font-size: 5ev;
+  }
+
+  a.homelinks {
+    font-size: 7ev;
+  }
+
 }

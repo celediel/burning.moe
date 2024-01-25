@@ -92,14 +92,6 @@ h2 {
 
   #words,
   #bigwords {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 800px) {
-
-  #words,
-  #bigwords {
     width: 100%;
   }
 

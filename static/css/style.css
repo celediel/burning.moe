@@ -4,8 +4,6 @@
   maybe use SASS or something
 
   the real TODO here is finding an image that doesn't require a white background
-
-  also TODO: proper mobile layout
 */
 
 body {
@@ -82,4 +80,43 @@ h1 {
 h2 {
   padding-top: 0px;
   font-size: 1.4em;
+}
+
+.logo {
+  /*max-width: 400px;*/
+  max-width: 100%;
+}
+
+/* width specific settings */
+@media screen and (max-width: 1200px) {
+
+  #words,
+  #bigwords {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  #words,
+  #bigwords {
+    width: 100%;
+  }
+
+  #leftfooter {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    text-align: right;
+  }
+
+  #rightfooter {
+    position: fixed;
+    bottom: 35px;
+    right: 10px;
+  }
+
+  #stuff {
+    margin: 15px 50px 25px 50px;
+  }
 }

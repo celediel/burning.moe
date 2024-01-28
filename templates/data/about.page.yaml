@@ -1,7 +1,7 @@
 StringMap:
   about: she/her; 1989; queer anarchist; self-taught, aspiring developer and sysadmin; lover of music, games, books, free software, history, fog, mountains, and forests;
 LinkMap:
-  Personal:
+  links:
     - href: https://matrix.to/#/@celediel:burning.moe
       text: matrix
       icon: tabler:brand-matrix

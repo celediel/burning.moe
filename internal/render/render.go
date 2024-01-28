@@ -28,7 +28,7 @@ func Initialise(a *config.AppConfig) {
 		var err error
 		app.TemplateCache, err = generateNewTemplateCache()
 		if err != nil {
-			app.Logger.Fatal("Error generating template cache, bailing out!")
+			app.Logger.Fatal("Error generating template cache, bailing out!", "err", err)
 		}
 	}
 }
@@ -108,7 +108,7 @@ func GetOrGenerateTemplateData(filename string) (*models.TemplateData, error) {
 func regenerateTemplateCache() {
 	c, err := generateNewTemplateCache()
 	if err != nil {
-		app.Logger.Fatal("Error generating template cache, bailing out!")
+		app.Logger.Fatal("Error generating template cache, bailing out!", "err", err)
 	}
 	app.TemplateCache = c
 

@@ -29,6 +29,9 @@ func main() {
 	}
 
 	// and finally, start the server
-	app.Logger.Printf("Listening on port %d", app.ListenPort)
-	srv.ListenAndServe()
+	app.Logger.Printf("Starting HTTP Server on port %d", app.ListenPort)
+	err := srv.ListenAndServe()
+	if err != nil {
+		app.Logger.Fatal("Failed to start HTTP Server!", "err", err)
+	}
 }

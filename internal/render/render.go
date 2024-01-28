@@ -26,15 +26,96 @@ func Initialise(a *config.AppConfig) {
 	app = a
 	if app.UseCache {
 		var err error
-		app.TemplateCache, err = GenerateNewTemplateCache()
+		app.TemplateCache, err = generateNewTemplateCache()
 		if err != nil {
 			app.Logger.Fatal("Error generating template cache, bailing out!")
 		}
 	}
 }
 
-// GenerateNewTemplateCache generates a new template cache.
-func GenerateNewTemplateCache() (models.TemplateCache, error) {
+// RenderTemplate renders requested template (t), pulling from cache.
+func RenderTemplate(w http.ResponseWriter, filename string) {
+	// TODO: implement this better
+	if !app.UseCache {
+		regenerateTemplateCache()
+	}
+
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
+	}
+
+	data, err := GetOrGenerateTemplateData(filename)
+	if err != nil {
+		app.Logger.Error(err)
+	}
+
+	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
+	err = template.Execute(data, w)
+	if err != nil {
+		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
+	}
+}
+
+func RenderTemplateWithData(w http.ResponseWriter, filename string, data *models.TemplateData) {
+	if !app.UseCache {
+		regenerateTemplateCache()
+	}
+
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
+	}
+
+	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
+	err = template.Execute(data, w)
+	if err != nil {
+		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
+	}
+}
+
+// GetTemplateFromCache gets templates from cache
+func GetTemplateFromCache(filename string) (*models.TemplateCacheItem, error) {
+	if template, ok := app.TemplateCache.Cache[filename]; ok {
+		return &template, nil
+	} else {
+		return &models.TemplateCacheItem{}, errors.New("Couldn't load template from cache")
+	}
+}
+
+// GetOrGenerateTemplateData gets template data from file, or generate simple
+func GetOrGenerateTemplateData(filename string) (*models.TemplateData, error) {
+	template, err := GetTemplateFromCache(filename)
+	if err != nil {
+		return &models.TemplateData{}, err
+	}
+
+	data, err := td.LoadTemplateData(filename)
+	if err == nil {
+		app.Logger.Debug(fmt.Sprintf("Loaded data for template %s.", filename), "data", &data)
+		if _, ok := data.StringMap["GeneratedAt"]; !ok {
+			data.StringMap["GeneratedAt"] = template.GeneratedAt.Format(time.UnixDate)
+		}
+	} else {
+		app.Logger.Info(fmt.Sprintf("Loading template data for %s failed, using default template data.", filename), "err", err)
+		data = td.MakeBasicTemplateData(template.GeneratedAt)
+	}
+
+	return &data, nil
+}
+
+// regenerateTemplateCache regenerates the template cache
+func regenerateTemplateCache() {
+	c, err := generateNewTemplateCache()
+	if err != nil {
+		app.Logger.Fatal("Error generating template cache, bailing out!")
+	}
+	app.TemplateCache = c
+
+}
+
+// generateNewTemplateCache generates a new template cache.
+func generateNewTemplateCache() (models.TemplateCache, error) {
 	// start with an empty map
 	cache := models.TemplateCache{}
 	cache.Cache = map[string]models.TemplateCacheItem{}
@@ -79,84 +160,4 @@ func GenerateNewTemplateCache() (models.TemplateCache, error) {
 
 	// All was good, so return the cache, and no error
 	return cache, nil
-}
-
-// RenderTemplate renders requested template (t), pulling from cache.
-func RenderTemplate(w http.ResponseWriter, filename string) {
-	// TODO: implement this better
-	if !app.UseCache {
-		RegenerateTemplateCache()
-	}
-
-	template, err := GetTemplateFromCache(filename)
-	if err != nil {
-		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
-	}
-
-	data, err := GetOrGenerateTemplateData(filename)
-	if err != nil {
-		app.Logger.Error(err)
-	}
-
-	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
-	err = template.Execute(data, w)
-	if err != nil {
-		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
-	}
-}
-
-func RenderTemplateWithData(w http.ResponseWriter, filename string, data *models.TemplateData) {
-	if !app.UseCache {
-		RegenerateTemplateCache()
-	}
-
-	template, err := GetTemplateFromCache(filename)
-	if err != nil {
-		app.Logger.Fatalf("Tried loading %s from the cache, but %s!", filename, err)
-	}
-
-	app.Logger.Debug(fmt.Sprintf("Executing template %s", filename), "data", &data)
-	err = template.Execute(data, w)
-	if err != nil {
-		app.Logger.Fatalf("Failed to execute template %s: %s", filename, err)
-	}
-}
-
-func RegenerateTemplateCache() {
-	c, err := GenerateNewTemplateCache()
-	if err != nil {
-		app.Logger.Fatal("Error generating template cache, bailing out!")
-	}
-	app.TemplateCache = c
-
-}
-
-// GetTemplateFromCache gets templates from cache
-func GetTemplateFromCache(filename string) (*models.TemplateCacheItem, error) {
-	if template, ok := app.TemplateCache.Cache[filename]; ok {
-		return &template, nil
-	} else {
-		return &models.TemplateCacheItem{}, errors.New("Couldn't load template from cache")
-	}
-}
-
-// GetOrGenerateTemplateData gets template data from file, or generate simple
-func GetOrGenerateTemplateData(filename string) (*models.TemplateData, error) {
-	template, err := GetTemplateFromCache(filename)
-	if err != nil {
-		return &models.TemplateData{}, err
-	}
-
-	data, err := td.LoadTemplateData(filename)
-	if err == nil {
-		app.Logger.Debug(fmt.Sprintf("Loaded data for template %s.", filename), "data", &data)
-		if _, ok := data.StringMap["GeneratedAt"]; !ok {
-			data.StringMap["GeneratedAt"] = template.GeneratedAt.Format(time.UnixDate)
-		}
-	} else {
-		app.Logger.Info(fmt.Sprintf("Loading template data for %s failed, using default template data.", filename), "err", err)
-		data = td.MakeBasicTemplateData(template.GeneratedAt)
-	}
-
-	return &data, nil
 }

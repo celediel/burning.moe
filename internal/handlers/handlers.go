@@ -16,7 +16,7 @@ import (
 // Handler holds data required for handlers.
 type Handler struct {
 	Handles string
-	Handler func(w http.ResponseWriter, r *http.Request)
+	Handler func(writer http.ResponseWriter, request *http.Request)
 }
 
 var app *config.AppConfig
@@ -43,7 +43,7 @@ func Initialise(a *config.AppConfig) {
 }
 
 // HomeHandler handles /, generating data from Handlers
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(writer http.ResponseWriter, request *http.Request) {
 	page := "home.page.tmpl"
 	d := models.TemplateData{}
 
@@ -72,20 +72,20 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	d.LinkMap = make(map[string][]models.Link)
 	d.LinkMap["Pages"] = pages
 	app.Logger.Debug("handling home with some data", "data", &d)
-	render.RenderTemplateWithData(w, "home.page.tmpl", &d)
+	render.RenderTemplateWithData(writer, "home.page.tmpl", &d)
 }
 
 // makeBasicHandler returns a simple handler that renders a template from `name`.page.tmpl
-func makeBasicHandler(name string) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
+func makeBasicHandler(name string) func(writer http.ResponseWriter, request *http.Request) {
+	return func(writer http.ResponseWriter, request *http.Request) {
 		pageName := name + ".page.tmpl"
-		render.RenderTemplate(w, pageName)
+		render.RenderTemplate(writer, pageName)
 	}
 }
 
 // makeLinksHandler returns a handler for links.tmpl with template data from `name`
-func makeLinksHandler(name string) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
+func makeLinksHandler(name string) func(writer http.ResponseWriter, request *http.Request) {
+	return func(writer http.ResponseWriter, request *http.Request) {
 		page := "links.tmpl"
 		template, err := render.GetTemplateFromCache(page)
 		if err != nil {
@@ -100,6 +100,6 @@ func makeLinksHandler(name string) func(w http.ResponseWriter, r *http.Request) 
 		}
 
 		app.Logger.Debug("handling a links page", "data", &data)
-		render.RenderTemplateWithData(w, page, &data)
+		render.RenderTemplateWithData(writer, page, &data)
 	}
 }

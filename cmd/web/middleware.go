@@ -13,9 +13,9 @@ var Middleware []func(next http.Handler) http.Handler = []func(next http.Handler
 	middleware.RealIP,
 	// plus custom request logger
 	func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			app.Logger.Info("REQUEST", "url", r.URL, "ip", r.RemoteAddr, "useragent", r.UserAgent())
-			next.ServeHTTP(w, r)
+		return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+			app.Logger.Info("REQUEST", "url", request.URL, "ip", request.RemoteAddr, "useragent", request.UserAgent())
+			next.ServeHTTP(writer, request)
 		})
 	},
 	middleware.Recoverer,

@@ -77,15 +77,16 @@ func HomeHandler(writer http.ResponseWriter, request *http.Request) {
 
 // RobotHandler creates a handler for robots.txt out of existing Handlers
 func RobotHandler(writer http.ResponseWriter, request *http.Request) {
-	robots := fmt.Sprintf("User-agent: %s\nAllow: /\n", request.UserAgent())
+	var robots strings.Builder
+	robots.WriteString(fmt.Sprintf("User-agent: %s\nAllow: /\n", request.UserAgent()))
 
 	for _, handler := range Handlers {
-		robots += fmt.Sprintf("Allow: %s\n", handler.Handles)
+		robots.WriteString(fmt.Sprintf("Allow: %s\n", handler.Handles))
 	}
 
-	robots += "Disallow: /*\n"
+	robots.WriteString("Disallow: /*\n")
 
-	fmt.Fprint(writer, robots)
+	fmt.Fprint(writer, robots.String())
 }
 
 // makeBasicHandler returns a simple handler that renders a template from `name`.page.tmpl

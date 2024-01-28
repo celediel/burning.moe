@@ -28,12 +28,12 @@ var Handlers = []Handler{
 		Handler: makeBasicHandler("about"),
 	},
 	{
-		Handles: "/apps",
-		Handler: makeLinksHandler("apps"),
-	},
-	{
 		Handles: "/projects",
 		Handler: makeLinksHandler("projects"),
+	},
+	{
+		Handles: "/apps",
+		Handler: makeLinksHandler("apps"),
 	},
 }
 

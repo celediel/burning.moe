@@ -8,6 +8,9 @@ LinkMap:
     - href: https://slrpnk.net/u/Celediel
       text: lemmy
       icon: simple-icons:lemmy
+    - href: https://listenbrainz.org/user/celediel/
+      text: listenbrainz
+      icon: material-symbols:music-cast
     - href: https://git.burning.moe/celediel
       text: self-hosted git
       icon: mdi:git

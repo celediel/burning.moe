@@ -8,6 +8,7 @@ Code for the [burning.moe](https://burning.moe) homepage
   - [cleanenv](https://github.com/ilyakaznacheev/cleanenv)
   - [log](https://github.com/charmbracelet/log)
   - [mage](https://github.com/magefile/mage)
+  - [tasks](https://github.com/madflojo/tasks)
 - written using [helix](https://helix-editor.com/)
 - tested on [void linux](https://voidlinux.org/)
 - hosted on [debian linux](https://www.debian.org/)

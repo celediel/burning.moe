@@ -12,6 +12,7 @@ import (
 
 // AppConfig contains data to be accessed across the app.
 type AppConfig struct {
+	CacheTimer    time.Duration
 	ListenPort    uint16
 	Logger        *log.Logger
 	LogLevel      log.Level
@@ -21,6 +22,7 @@ type AppConfig struct {
 
 // defaluts contains default settings that are used if no environmental variables are set
 var defaults = &AppConfig{
+	CacheTimer: time.Hour * 12,
 	ListenPort: 9001,
 	LogLevel:   log.InfoLevel,
 	UseCache:   true,
@@ -28,6 +30,7 @@ var defaults = &AppConfig{
 
 // ConfigDatabase contains data to be loaded from environmental variables
 type ConfigDatabase struct {
+	CacheTimer time.Duration `env:"CACHETIMER" env-description:"How often to automatically regenerate template cache."`
 	LogLevel   string        `env:"LOGLEVEL" env-description:"Logging level. Default: warn, Possible values: debug info warn error fatal none"`
 	Port       uint16        `env:"PORT" env-description:"server port"`
 	UseCache   bool          `env:"CACHE" env-description:"Use template cache"`
@@ -47,6 +50,7 @@ func Initialise() AppConfig {
 	if cfg, err := loadConfig(); err == nil {
 		app.ListenPort = cfg.Port
 		app.UseCache = cfg.UseCache
+		app.CacheTimer = cfg.CacheTimer
 		app.LogLevel, err = log.ParseLevel(cfg.LogLevel)
 		if err != nil {
 			app.LogLevel = defaults.LogLevel
@@ -56,7 +60,10 @@ func Initialise() AppConfig {
 	}
 
 	app.Logger.SetLevel(app.LogLevel)
-	app.Logger.Debug("Loaded config from environment:", "port", app.ListenPort, "useCache", app.UseCache, "log_level", app.LogLevel)
+	app.Logger.Debug("Loaded config from environment:",
+		"port", app.ListenPort, "useCache", app.UseCache,
+		"log_level", app.LogLevel, "cacheTimer", app.CacheTimer,
+	)
 
 	return app
 }

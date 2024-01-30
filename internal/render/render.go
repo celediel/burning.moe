@@ -37,7 +37,10 @@ func Initialise(a *config.AppConfig) {
 func RenderTemplate(w http.ResponseWriter, filename string) {
 	// TODO: implement this better
 	if !app.UseCache {
-		regenerateTemplateCache()
+		err := RegenerateTemplateCache()
+		if err != nil {
+			app.Logger.Fatal("Regenerating template cache failed!", err, "err")
+		}
 	}
 
 	template, err := GetTemplateFromCache(filename)
@@ -59,7 +62,10 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 
 func RenderTemplateWithData(w http.ResponseWriter, filename string, data *models.TemplateData) {
 	if !app.UseCache {
-		regenerateTemplateCache()
+		err := RegenerateTemplateCache()
+		if err != nil {
+			app.Logger.Fatal("Regenerating template cache failed!", err, "err")
+		}
 	}
 
 	template, err := GetTemplateFromCache(filename)
@@ -104,13 +110,15 @@ func GetOrGenerateTemplateData(filename string) (*models.TemplateData, error) {
 	return &data, nil
 }
 
-// regenerateTemplateCache regenerates the template cache
-func regenerateTemplateCache() {
+// RegenerateTemplateCache regenerates the template cache
+func RegenerateTemplateCache() error {
 	c, err := generateNewTemplateCache()
 	if err != nil {
-		app.Logger.Fatal("Error generating template cache, bailing out!", "err", err)
+		// app.Logger.Fatal("Error generating template cache, bailing out!", "err", err)
+		return err
 	}
 	app.TemplateCache = c
+	return nil
 
 }
 

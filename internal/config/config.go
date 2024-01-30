@@ -13,24 +13,24 @@ import (
 // AppConfig contains data to be accessed across the app.
 type AppConfig struct {
 	ListenPort    uint16
-	TemplateCache models.TemplateCache
-	UseCache      bool
 	Logger        *log.Logger
 	LogLevel      log.Level
+	TemplateCache models.TemplateCache
+	UseCache      bool
 }
 
 // defaluts contains default settings that are used if no environmental variables are set
 var defaults = &AppConfig{
 	ListenPort: 9001,
-	UseCache:   true,
 	LogLevel:   log.InfoLevel,
+	UseCache:   true,
 }
 
 // ConfigDatabase contains data to be loaded from environmental variables
 type ConfigDatabase struct {
-	Port     uint16 `env:"PORT" env-default:"9001" env-description:"server port"`
-	LogLevel string `env:"LOGLEVEL" env-default:"warn" env-description:"Logging level. Default: warn, Possible values: debug info warn error fatal none"`
-	UseCache bool   `env:"CACHE" env-default:"true" env-description:"Use template cache"`
+	LogLevel   string        `env:"LOGLEVEL" env-default:"warn" env-description:"Logging level. Default: warn, Possible values: debug info warn error fatal none"`
+	Port       uint16        `env:"PORT" env-default:"9001" env-description:"server port"`
+	UseCache   bool          `env:"CACHE" env-default:"true" env-description:"Use template cache"`
 }
 
 // Initialises the app wide AppConfig, loads values from environment, and set up the Logger

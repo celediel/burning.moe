@@ -28,9 +28,9 @@ var defaults = &AppConfig{
 
 // ConfigDatabase contains data to be loaded from environmental variables
 type ConfigDatabase struct {
-	LogLevel   string        `env:"LOGLEVEL" env-default:"warn" env-description:"Logging level. Default: warn, Possible values: debug info warn error fatal none"`
-	Port       uint16        `env:"PORT" env-default:"9001" env-description:"server port"`
-	UseCache   bool          `env:"CACHE" env-default:"true" env-description:"Use template cache"`
+	LogLevel   string        `env:"LOGLEVEL" env-description:"Logging level. Default: warn, Possible values: debug info warn error fatal none"`
+	Port       uint16        `env:"PORT" env-description:"server port"`
+	UseCache   bool          `env:"CACHE" env-description:"Use template cache"`
 }
 
 // Initialises the app wide AppConfig, loads values from environment, and set up the Logger

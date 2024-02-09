@@ -42,6 +42,9 @@ func main() {
 			app.Logger.Error("Error in template regeneration cache job!", "err", err)
 		},
 	})
+	if err != nil {
+		app.Logger.Error("Error setting upscheduler", "err", err)
+	}
 
 	app.Logger.Info("Started cache regeneration task.", "interval", app.CacheTimer.String(), "id", id)
 

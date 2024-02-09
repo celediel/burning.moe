@@ -20,9 +20,9 @@ type TemplateCacheItem struct {
 }
 
 // Execute writes the template to the supplied writer using the supplied data.
-func (self *TemplateCacheItem) Execute(d *TemplateData, w http.ResponseWriter) error {
+func (item *TemplateCacheItem) Execute(d *TemplateData, w http.ResponseWriter) error {
 	buf := new(bytes.Buffer)
-	err := self.Template.Execute(buf, d)
+	err := item.Template.Execute(buf, d)
 	if err != nil {
 		return err
 	}

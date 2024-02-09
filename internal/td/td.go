@@ -49,5 +49,5 @@ func LoadTemplateData(page string) (models.TemplateData, error) {
 	}
 
 	// couldn't load anything from file
-	return models.TemplateData{}, errors.New("Couldn't load data from file")
+	return models.TemplateData{}, errors.New("couldn't load data from file")
 }

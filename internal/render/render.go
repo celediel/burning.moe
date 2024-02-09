@@ -85,7 +85,7 @@ func GetTemplateFromCache(filename string) (*models.TemplateCacheItem, error) {
 	if template, ok := app.TemplateCache.Cache[filename]; ok {
 		return &template, nil
 	} else {
-		return &models.TemplateCacheItem{}, errors.New("Couldn't load template from cache")
+		return &models.TemplateCacheItem{}, errors.New("couldn't load template from cache")
 	}
 }
 

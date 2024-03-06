@@ -7,7 +7,6 @@ require (
 	github.com/go-chi/chi/v5 v5.0.11
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/madflojo/tasks v1.1.0
-	github.com/magefile/mage v1.15.0
 )
 
 require (

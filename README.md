@@ -7,7 +7,6 @@ Code for the [burning.moe](https://burning.moe) homepage
   - [chi](https://github.com/go-chi/chi)
   - [cleanenv](https://github.com/ilyakaznacheev/cleanenv)
   - [log](https://github.com/charmbracelet/log)
-  - [mage](https://github.com/magefile/mage)
   - [tasks](https://github.com/madflojo/tasks)
 - written using [helix](https://helix-editor.com/)
 - tested on [void linux](https://voidlinux.org/)

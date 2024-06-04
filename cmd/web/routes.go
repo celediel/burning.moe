@@ -32,6 +32,9 @@ func routes(app *config.AppConfig) http.Handler {
 	app.Logger.Debug("Setting up /static file server")
 	mux.Handle("/static/*", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
 
+	// handle certbot challenge
+	mux.Handle("/.well-known/acme-challenge/*", http.StripPrefix("/.well-known/acme-challenge", http.FileServer(http.Dir("./.well-known/acme-challenge"))))
+
 	// Setup routes for handlers
 	for _, handler := range handlers.Handlers {
 		app.Logger.Info("Setting up handler for " + handler.Handles)

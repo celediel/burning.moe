@@ -8,28 +8,28 @@ default: run
 
 # build binary
 build:
-	go build -o {{output}} {{cmd}}
+    go build -o {{ output }} {{ cmd }}
 
 # run from source
 run:
-	go run {{cmd}}
+    go run {{ cmd }}
 
 # build 'n run
 run-binary: build
-	exec {{output}}
+    exec {{ output }}
 
 # run with args
 run-args args:
-	go run {{cmd}} {{args}}
+    go run {{ cmd }} {{ args }}
 
 # install binary into $GOPATH
 install:
-	go install {{cmd}}
+    go install {{ cmd }}
 
 # clean up after yourself
 clean:
-	rm {{output}}
+    rm {{ output }}
 
 # run go tests
 test:
-	go test ./...
+    go test ./...

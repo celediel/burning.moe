@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/arl/statsviz"
 	"github.com/go-chi/chi/v5"
 
 	"git.burning.moe/celediel/burning.moe/internal/config"
@@ -18,6 +19,14 @@ func routes(app *config.AppConfig) http.Handler {
 	for _, mw := range Middleware {
 		mux.Use(mw)
 	}
+
+	// Setup stats viewer
+	stats, _ := statsviz.NewServer()
+	mux.Get("/debug/statsviz/ws", stats.Ws())
+	mux.Get("/debug/statsviz", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/debug/statsviz/", 301)
+	})
+	mux.Handle("/debug/statsviz/*", stats.Index())
 
 	// Setup static file server
 	app.Logger.Debug("Setting up /static file server")

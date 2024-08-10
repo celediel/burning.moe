@@ -18,10 +18,17 @@ LinkMap:
     - href: https://git.burning.moe/celediel/qud-mods
       text: assorted mods for Caves of Qud
       icon: teenyicons:c-sharp-solid
-  misc:
+  go:
     - href: https://git.burning.moe/celediel/burning.moe
       text: burning.moe - this website
       icon: file-icons:go-old
+    - href: https://git.burning.moe/celediel/gt
+      text: gt - small cli for XDG trash specification
+      icon: file-icons:go-old
+    - href: https://git.burning.moe/celediel/agedit
+      text: agedit - edit age encrypted text with $EDITOR
+      icon: file-icons:go-old
+  misc:
     - href: https://git.burning.moe/celediel/poiekolon.nvim
       text: poiekolon.nvim - neovim plugin to add or toggle a char at the end of a line
       icon: simple-icons:lua

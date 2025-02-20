@@ -7,7 +7,7 @@ LinkMap:
       icon: simple-icons:uptimekuma
   git:
     - href: https://git.burning.moe/
-      text: gitea
+      text: forgejo
       icon: mdi:git
     - href: https://gist.burning.moe/
       text: opengist

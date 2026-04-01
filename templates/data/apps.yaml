@@ -2,9 +2,9 @@ StringMap:
   words: some things other people wrote that I've hosted
 LinkMap:
   status:
-    - href: https://kuma.burning.moe/status/amazing-beaver
+    - href: https://status.burning.moe
       text: burning.moe status page
-      icon: simple-icons:uptimekuma
+      icon: token:status
   git:
     - href: https://git.burning.moe/
       text: forgejo
